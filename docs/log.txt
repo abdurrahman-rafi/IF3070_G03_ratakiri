@@ -1,0 +1,42 @@
+28/10/2026
+Problem Identification
+https://www.geeksforgeeks.org/artificial-intelligence/introduction-hill-climbing-artificial-intelligence/
+https://www.youtube.com/watch?v=4CfV7A_RWrw
+https://www.youtube.com/watch?v=MacVqujSXWE
+
+| Entitas | Atribut | Contoh | Keterangan |
+| :---- | :---- | :---- | :---- |
+| Vehicle | id | “Owen” | *Identifier* |
+|  | Dimensions | {w:3, l:4} | Ukuran sebuah kendaraan, terdiri atas *width* dan *length* (satuan grid) |
+|  | Orientation | Horizontal | *Horizontal* atau *Vertical* |
+|  | ShippingFee | 60 | Tarif/keuntungan pengiriman kendaraan (satuan juta rupiah) |
+|  | Weight | 5 | Berat kendaraan (satuan unit) |
+|  | ETA | 3 | [Estimated Time of Arrival](https://www.shippeo.com/resources/explore/blog-newsletter/eta-meaning-in-business-a-critical-metric-for-supply-chain-success), perkiraan waktu kedatangan kendaraan (dalam sisa hari) |
+| Ship | Dimensions | {w:10, l:20} | Ukuran geladak pada kapal, terdiri atas *width* dan *length* (satuan grid) |
+|  | MaxCapacity | 500 | Kapasitas angkut maksimum suatu truk (satuan unit) |
+
+Variables: 
+
+Constraints:
+Semua kendaraan harus ada di dalam container kapal (hilangin opsi buat suatu kendaraan bisa out of bond dalam koordinatnya?)
+Tidak boleh ada yang overlap (belum tau kaya gimana)
+Total weight tidak boleh melebihi capacity kapal (checker biasa)
+--> Coba represanti koordinat binary biar gampang ngeceknya. Tiap lokasi yang possible untuk suatu item A dijadikan satu variabel lalu diganti 0/1 tergantung apakah lokasi tersebut ditempati A
+----> Problem yang ada, gimana cara ngecek overlap? ditambah x,y dari w dan h? 
+----> Variabel harus banya per item. misal dengan 5 item 
+
+Langkah Neighbor:
+Menukar dua kendaraan, baik di dalam maupun di luar truk (prob jadi child lain, nanti diliat)
+Memindahkan sebuah kendaraan ke suatu koordinat yang berbeda
+Mengubah orientasi kendaraan (prob bisa mengurangi step ini dengan cek apakah persegi atau bukan (w==h). Representasi berarti swap w dan h, point nya bisa tetep di bottom left karena pasti tetep rektangular)
+
+Objective Function:
+Maximum Shipping Fee
+Minimum ETA (?) (lebih cepat kapal berangkat, lebih cepat untuk chance kapal tersebut dapat digunakan kembali) (bonus)
+Minimum Weight (?) (berat yang lebih sedikit -> fuel usage?)(bonus)
+
+Visualisasi (nanti)
+Bagaimana keadaan semua kendaraan yang di dalam maupun yang di luar
+Bagaimana keadaan geladak pada kapal
+Value pada state tersebut
+
