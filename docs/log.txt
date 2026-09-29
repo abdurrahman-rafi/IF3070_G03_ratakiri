@@ -40,3 +40,6 @@ Bagaimana keadaan semua kendaraan yang di dalam maupun yang di luar
 Bagaimana keadaan geladak pada kapal
 Value pada state tersebut
 
+28/09/2026
+Draft beberapa kode dari identifikasi masalah
+

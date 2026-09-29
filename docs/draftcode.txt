@@ -1,0 +1,39 @@
+Last Updated 28/09/2026
+state.py
+dict (or list) of vehicles
+value = sum of ShippingFee of vehicles # + k * ETA + weight valuex
+
+moves.py
+swap
+rotate
+
+
+constraints.py
+# tidak boleh ada bagian satu kendaraan yang ada diluar kapal
+def constraint dalam kapal ret int (1/0)
+	for every kendaraan in dict
+		if x+w-1 > max_x or y+h-1 > max_y
+			return 0
+		return 1
+
+# tidak boleh ada yang overlap
+def constraint overlap ret int 1/0
+	for every kendaraan a in dict
+		a <- kendaraan
+		for every kendaraan b in dict
+			if (a.x < b.x + b.w AND b.x < a.x + a.w) AND a.y < (b.y + b.h AND b.y < a.y + a.h)
+				ret 0
+	ret 1
+			
+# tidak boleh total weight melebihi
+def constraint berat 
+	if sum of kendaraan yang di place di kapal (placed = 1) > max weight
+		ret 0
+	ret 1
+	
+	the resource you mentioned are general use, I meant resource for this kind of task (local search, machine learning, etc). 
+Check my notation algorithm attached. Is there any flawed logic? DO NOT RECOMMEND CODE 
+Check if 
+	
+
+
