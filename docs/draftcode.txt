@@ -1,39 +1,135 @@
-Last Updated 28/09/2026
+objects
+vehicles = {"Owen": {"w": 3, "l": 4, "fee": 60, "weight": 5, "eta": 3}, ...}
+placement = {"Owen": {"ship": 0, "x": 2, "y": 5, "orient": "H"},
+             "Rzi":  {"ship": -1, "x": None, "y": None, "orient": "V"}}
+
 state.py
-dict (or list) of vehicles
-value = sum of ShippingFee of vehicles # + k * ETA + weight valuex
+import move.py (?)
+class DockState
+	def init(self, vehicles, dockConfig)
+		init all var
+		OUTSIDE = -1
+		self.ship_options = [s.id for s in ships] + [OUTSIDE] 
+		
+	def initial_state(self)
+	shipIdList = list(dockConfig.shipId) (pokoknya ambil semua id ship)
+	for vehicles v in vehicles
+		v.shipId = random.choice(shipIdList, -1)
+		if v.shipId != -1 (jika random state menentukan vehicle tersebut ada dalam salah satu kapal)
+			x = random.randint(1, dockConfig(shipId)(W − w + 1))
+			y = random.randint(1, dockConfig(shipId)(L − l + 1))
+			v[x], v[y] = x, y
+	ret self
+	
+	def gen_neighbors
+		new_placement = {vid: dict(p) for vid, p in placement.items()}
+		choice_move(neighbor)
+		ret neighbor
+		
+	all_neighbors(state)
+	(for every algorithm that needs all neighbor)
+		
+	def build_visual (prob py)
+		
+		
 
 moves.py
-swap
-rotate
+keys list = vehicles
+
+def remove_from_ship(state)
+	key = random(vehicle keys list)
+	state.vehicle[key].shipId = -1
+	
+def swap_move(state)
+	key1, key2 = random.sample(keys,2)
+	if state.vehicles[key1].ship_id == -1 AND vehicles[key2].ship_id == -1
+		while vehicles[key1].ship_id == -1 
+		key1 = random.choice(keys)
+	temp = copy.state.vehicles[key2]
+	state.vehicles[key2]['x'], state.vehicles[key2]['y'], state.vehicles[key2].shipid = state.vehicles[key1]['x'], state.vehicles[key1]['y'], state.vehicles[key1].shipid
+	state.vehicles[key1]['x'], state.vehicles[key1]['y'], state.vehicles[key1].shipid= temp['x'], temp['y']
+
+def rotate_move(state)
+	key = random(keys list)
+	if vehicles[key].ship_id == -1 
+		while vehicles[key1].ship_id == -1 
+			key1 = random.choice(keys)
+	vehicle[key][w], vehicle[key][h] = (swap)
+	if vehicle.orient = Horizontal
+		vehicle orient = Vertical
+	else
+		vehicle orient = Horizontal
+
+def place_move(state)
+	key = random(keys list)
+	if vehicles[keys](ship_id) == -1 
+		vehicles[keys](ship_id) = random.choice(dock_config(list of ships)
+		
+	shipId = vehicles[keys](ship_id)
+	x,y = vehicles[keys](x), vehicles[keys](y)
+	while x = vehicles[keys](x) AND y = vehicles[keys](y)
+		x = random.randint(1, dockConfig(ship_id)(W − w + 1))
+		y = random.randint(1, dockConfig(ship_id)(L − l + 1))
+	vehicles[keys](x), vehicles[keys](y) = x, y
+
+def available_move(state)
+	-hilangin semua opsi rotasi untuk vehicle persegi (w==h)
+	-hilangin opsi lokasi yang sudah ditempati
+	-hilangin opsi overlap? possible? --> jangan, untuk sistem penalti
+	
+def choice_move(state)
+	random.choice from all available move
+
 
 
 constraints.py
 # tidak boleh ada bagian satu kendaraan yang ada diluar kapal
-def constraint dalam kapal ret int (1/0)
-	for every kendaraan in dict
-		if x+w-1 > max_x or y+h-1 > max_y
-			return 0
-		return 1
+def constraint dalam kapal ret int penalty
+	penalty = 0
+	
+	for every vehicle v
+		if placed = 1 # shipId != -1
+		if x+w-1 > ship[shipId].max_x or y+h-1 > max_y
+				penalty = penalty + v.shipping_fee * 1.5
+	return penalty
 
 # tidak boleh ada yang overlap
-def constraint overlap ret int 1/0
-	for every kendaraan a in dict
-		a <- kendaraan
-		for every kendaraan b in dict
-			if (a.x < b.x + b.w AND b.x < a.x + a.w) AND a.y < (b.y + b.h AND b.y < a.y + a.h)
-				ret 0
-	ret 1
+def constraint overlap ret int penalty
+	penalty = 0
+	for i in range n
+		for j in range(i+1, n0
+			a = vehicle[i]
+			b = vehicle[j]
+			if a.ship_id == -1 OR b.ship_id == -1
+				continue
+			else
+			if a.shipId != b.shipId
+				x_overlap = (a[x] < b[x] + b[w]) and (b[x] < a[x] + a[w])
+			   	x_overlap = (a[y] < b[y] + b[h]) and (b[y] < a[y] + a[h])
+		    
+			if x_overlap and x_overlap:
+			penalty = penalty + a.shipping_fee * 1.5 + b.shipping_fee
+				
+	ret penalty
 			
 # tidak boleh total weight melebihi
-def constraint berat 
-	if sum of kendaraan yang di place di kapal (placed = 1) > max weight
-		ret 0
-	ret 1
+def constraint berat ret penalty
+penalty = 0
+	if sum of weight kendaraan yang di place di kapal (placed = 1) > max weight
+		penalty = sum of weight * 0.1 every value
+	ret penalty
 	
-	the resource you mentioned are general use, I meant resource for this kind of task (local search, machine learning, etc). 
-Check my notation algorithm attached. Is there any flawed logic? DO NOT RECOMMEND CODE 
-Check if 
-	
+objective.py
+def evaluate
+	penalty = check constraint(state)
+	fitnessScore = state.value - penalty
+	return fitnessScore
 
+algorithms.py
+
+
+
+
+
+	
 
