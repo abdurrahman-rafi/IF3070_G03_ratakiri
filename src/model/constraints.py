@@ -1,55 +1,83 @@
 from .instance import footprint
 
 
+# Cek apakah dua persegi panjang di grid beririsan.
+# Masukan : (x, y) sel kiri bawah (mulai dari 1) dan ukuran (w, l) masing-masing.
+# Keluaran: True kalau overlap di sumbu x dan sumbu y sekaligus.
+# Dua vehicle yang hanya bersentuhan sisi tidak dihitung overlap.
+def rectangles_overlap(ax, ay, aw, al, bx, by, bw, bl):
+    x_overlap = (ax < bx + bw) and (bx < ax + aw)
+    y_overlap = (ay < by + bl) and (by < ay + al)
+    return x_overlap and y_overlap
+
+
+# Cek apakah satu vehicle boleh ditaruh di (ship, x, y, orient) tanpa melanggar constraint,
+# dengan menganggap posisi vehicle itu sendiri sekarang kosong.
+# Yang dicek: di dalam geladak, capacity ship tidak terlewati, tidak overlap dengan vehicle lain.
+# Dipakai initial_state supaya state awal pasti feasible.
+def can_place(state, vid, ship, x, y, orient):
+    ship_info = state.ships[ship]
+    w, l = footprint(state.vehicles[vid], orient)
+    if x < 1 or y < 1 or x + w - 1 > ship_info["w"] or y + l - 1 > ship_info["l"]:
+        return False
+
+    load = state.ship_load(ship)
+    if state.placement[vid]["ship"] == ship:
+        load -= state.vehicles[vid]["weight"]
+    if load + state.vehicles[vid]["weight"] > ship_info["capacity"]:
+        return False
+
+    for other in state.placed_vehicles():
+        p = state.placement[other]
+        if other == vid or p["ship"] != ship:
+            continue
+        ow, ol = footprint(state.vehicles[other], p["orient"])
+        if rectangles_overlap(x, y, w, l, p["x"], p["y"], ow, ol):
+            return False
+    return True
+
+
 # tidak boleh ada bagian satu kendaraan yang ada diluar kapal
-def out_of_bounds_penalty(state):
-    # penalty = 0
-    # for every vehicle v in state.placed_vehicles()
-    #     w, l = footprint(v, orient)
-    #     if x + w - 1 > ship W or y + l - 1 > ship L
-    #         penalty = penalty + v.fee * 1.5
-    # ret penalty
-    raise NotImplementedError
+# Keluaran: True kalau ada vehicle placed yang x + w - 1 > W ship atau y + l - 1 > L ship
+# (atau x, y < 1).
+def has_out_of_bounds(state):
+    for vid in state.placed_vehicles():
+        p = state.placement[vid]
+        ship_info = state.ships[p["ship"]]
+        w, l = footprint(state.vehicles[vid], p["orient"])
+        if p["x"] < 1 or p["y"] < 1 or p["x"] + w - 1 > ship_info["w"] or p["y"] + l - 1 > ship_info["l"]:
+            return True
+    return False
 
 
 # tidak boleh ada yang overlap
-def overlap_penalty(state):
-    # penalty = 0
-    # placed = state.placed_vehicles()
-    # for i in range(len(placed))
-    #     for j in range(i + 1, len(placed))
-    #         a, b = placed[i], placed[j]
-    #         if a.ship != b.ship
-    #             continue
-    #         aw, al = footprint(a) ; bw, bl = footprint(b)
-    #         x_overlap = (a.x < b.x + bw) and (b.x < a.x + aw)
-    #         y_overlap = (a.y < b.y + bl) and (b.y < a.y + al)
-    #         if x_overlap and y_overlap
-    #             penalty = penalty + 1.5 * (a.fee + b.fee)
-    # ret penalty
-    raise NotImplementedError
+# Keluaran: True kalau ada dua vehicle di ship yang sama yang overlap.
+# Tiap pasangan dicek sekali (j mulai dari i + 1); vehicle di ship berbeda dilewati.
+def has_overlap(state):
+    placed = state.placed_vehicles()
+    for i in range(len(placed)):
+        for j in range(i + 1, len(placed)):
+            a, b = state.placement[placed[i]], state.placement[placed[j]]
+            if a["ship"] != b["ship"]:
+                continue
+            aw, al = footprint(state.vehicles[placed[i]], a["orient"])
+            bw, bl = footprint(state.vehicles[placed[j]], b["orient"])
+            if rectangles_overlap(a["x"], a["y"], aw, al, b["x"], b["y"], bw, bl):
+                return True
+    return False
 
 
 # tidak boleh total weight melebihi
-def weight_penalty(state):
-    # factor = 1.5 * max(fee / weight) dari semua vehicle
-    # load = {ship_id: 0}
-    # for every vehicle v in state.placed_vehicles()
-    #     load[v.ship] += v.weight
-    # penalty = 0
-    # for every ship
-    #     excess = load[ship] - ship.capacity
-    #     if excess > 0
-    #         penalty = penalty + factor * excess
-    # ret penalty
-    raise NotImplementedError
+# Keluaran: True kalau total weight vehicle placed di salah satu ship > capacity ship itu.
+def is_overweight(state):
+    for ship, ship_info in state.ships.items():
+        if state.ship_load(ship) > ship_info["capacity"]:
+            return True
+    return False
 
 
-def total_penalty(state):
-    # ret out_of_bounds_penalty + overlap_penalty + weight_penalty
-    raise NotImplementedError
-
-
+# Keluaran: True kalau state tidak melanggar satu pun dari tiga constraint di atas.
+# Draft awal memakai penalty per constraint (fee * 1.5 dst.); sekarang cukup feasible atau tidak,
+# karena state yang melanggar langsung bernilai 0 di evaluate.
 def is_feasible(state):
-    # ret total_penalty(state) == 0
-    raise NotImplementedError
+    return not (has_out_of_bounds(state) or has_overlap(state) or is_overweight(state))
