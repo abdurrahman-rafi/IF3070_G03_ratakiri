@@ -29,11 +29,13 @@ def run_repeated(algorithm, instance_path, n_runs=3, base_seed=945, out_dir="out
 
 
 # Menyimpan satu hasil ke JSON.
-# Lokasi: out_dir/<algorithm>/run<run>_seed<seed>_<params>.json.
+# Lokasi: out_dir/instance/<algorithm>/run<run>_seed<seed>_<params>.json.
+# Nama instance ada di path supaya hasil dari instance berbeda tidak saling menimpa.
 # Params ada di nama file supaya variasi nama parameter tidak saling menimpa.
 # Keluaran: path file yang ditulis.
 def save_result(result, out_dir="output"):
-    folder = os.path.join(out_dir, result["algorithm"])
+    instance_name = os.path.splitext(result.get("instance", "unknown"))[0]
+    folder = os.path.join(out_dir, instance_name,result["algorithm"])
     os.makedirs(folder, exist_ok=True)
     param_text = "_".join(f"{key}{value}" for key, value in sorted(result["params"].items()))
     name = f"run{result['run']}_seed{result['seed']}_{param_text}.json"
