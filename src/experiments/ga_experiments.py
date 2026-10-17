@@ -23,7 +23,7 @@ def run_all(instance_path, base_seed=945, out_dir="output"):
                                out_dir=out_dir, population_size=population, iterations=iterations)
         values = [r["final_value"] for r in results]
         times = [r["duration_sec"] for r in results]
-        print(f"populasi={population<4}, iterasi={iterations<4}: "
+        print(f"populasi={population:<4}, iterasi={iterations:<4}: "
               f"final={values} rata-rata={statistics.mean(values):.1f} "
               f"durasi rata-rata={statistics.mean(times):.2f}s")
         all_results.extend(results)
