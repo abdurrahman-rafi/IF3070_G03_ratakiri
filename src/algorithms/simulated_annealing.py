@@ -5,8 +5,7 @@ from ..model.objective import evaluate
 
 
 def simulated_annealing(initial_state, rng, initial_temp=100.0,
-                        cooling_rate=0.99, min_temp=0.01,
-                        evaluation_bias=0.0):
+                        cooling_rate=0.99, min_temp=0.01):
     if not (math.isfinite(initial_temp) and math.isfinite(min_temp)
             and 0 < min_temp < initial_temp):
         raise ValueError(
@@ -16,12 +15,10 @@ def simulated_annealing(initial_state, rng, initial_temp=100.0,
     if not 0 < cooling_rate < 1:
         raise ValueError("cooling_rate harus antara 0 dan 1")
 
-    # evaluation_bias baru dicatat, belum memengaruhi pencarian.
     params = {
         "initial_temp": initial_temp,
         "cooling_rate": cooling_rate,
         "min_temp": min_temp,
-        "evaluation_bias": evaluation_bias,
     }
 
     recorder = SearchRecorder(
@@ -32,6 +29,8 @@ def simulated_annealing(initial_state, rng, initial_temp=100.0,
     current_value = evaluate(current)
     temperature = initial_temp
     iterations = 0
+    # Definisi kelompok: satu stuck dihitung untuk setiap neighbor yang ditolak.
+    stuck_count = 0
 
     recorder.record(current, current_value)
 
@@ -48,6 +47,8 @@ def simulated_annealing(initial_state, rng, initial_temp=100.0,
         if delta >= 0 or rng.random() < probability:
             current = neighbor
             current_value = neighbor_value
+        else:
+            stuck_count += 1
 
         iterations += 1
         recorder.record(current, current_value)
@@ -61,5 +62,8 @@ def simulated_annealing(initial_state, rng, initial_temp=100.0,
     return recorder.finish(
         final_state,
         iterations,
-        extra={"last_value": current_value},
+        extra={
+            "last_value": current_value,
+            "stuck_count": stuck_count,
+        },
     )
