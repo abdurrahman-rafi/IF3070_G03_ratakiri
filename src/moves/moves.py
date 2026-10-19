@@ -1,23 +1,14 @@
 from ..model.instance import OUTSIDE, footprint, other_orient, fits
 
-# Bobot peluang tiap jenis move di random_neighbor. Bobot 0 berarti move dimatikan,
-# baik di random_neighbor maupun all_neighbors. "remove" mati karena bukan salah satu
-# dari tiga langkah neighbor di spesifikasi (swap, pindah koordinat, ubah orientasi).
-MOVE_WEIGHTS = {"swap": 0.4, "relocate": 0.4, "rotate": 0.2, "remove": 0.0}
+# Bobot peluang tiap jenis move di random_neighbor, sesuai tiga langkah neighbor di spesifikasi
+# (swap, pindah koordinat, ubah orientasi).
+MOVE_WEIGHTS = {"swap": 0.4, "relocate": 0.4, "rotate": 0.2}
 
 
-# Mengeluarkan satu vehicle dari ship: ship jadi OUTSIDE, x dan y jadi None.
-# Masukan : state, vid. Keluaran: state baru (state asal tidak diubah).
-def remove_from_ship(state, vid):
-    new = state.copy()
-    new.placement[vid].update(ship=OUTSIDE, x=None, y=None)
-    return new
-
-
-# Menukar (ship, x, y) dua vehicle; orient tetap milik masing-masing.
+# Menukar (ship, x, y) dua vehicle, orient tetap milik masing-masing.
 # Kalau salah satunya OUTSIDE, yang di luar masuk dan yang di dalam keluar.
 # Dua posisi dibaca dulu, baru ditulis, supaya tidak saling timpa.
-# Masukan : state, vid a, vid b. Keluaran: state baru, boleh tidak feasible.
+# Input state dan dua vid, output state baru yang boleh tidak feasible.
 def swap_move(state, a, b):
     new = state.copy()
     pa, pb = new.placement[a], new.placement[b]
@@ -30,7 +21,7 @@ def swap_move(state, a, b):
 
 # Mengubah orientasi satu vehicle (H <-> V). w dan l asli tidak diubah,
 # titik kiri bawah tetap di tempat.
-# Masukan : state, vid. Keluaran: state baru, boleh tidak feasible.
+# Input state dan vid, output state baru yang boleh tidak feasible.
 def rotate_move(state, vid):
     new = state.copy()
     new.placement[vid]["orient"] = other_orient(new.placement[vid]["orient"])
@@ -39,16 +30,16 @@ def rotate_move(state, vid):
 
 # Memindahkan satu vehicle ke (ship, x, y): dari luar ke dalam, antar ship,
 # atau ke koordinat lain di ship yang sama.
-# Masukan : state, vid, ship, x, y. Keluaran: state baru, boleh overlap atau overweight.
+# Input state, vid, ship, x, y, output state baru yang boleh overlap atau overweight.
 def place_move(state, vid, ship, x, y):
     new = state.copy()
     new.placement[vid].update(ship=ship, x=x, y=y)
     return new
 
 
-# Keluaran: list (x, y) yang bisa ditempati vid di ship dengan orient sekarang, yaitu
+# Semua posisi (x, y) yang bisa ditempati vid di ship dengan orient sekarang, yaitu
 # x in [1, W - w + 1] dan y in [1, L - l + 1], tanpa posisi sekarang.
-# Opsi yang keluar geladak tidak pernah dibuat; overlap sengaja tidak disaring
+# Opsi yang keluar deck tidak pernah dibuat. Overlap sengaja tidak disaring
 # karena state yang overlap cukup bernilai 0.
 def relocate_positions(state, vid, ship):
     p = state.placement[vid]
@@ -62,24 +53,15 @@ def relocate_positions(state, vid, ship):
             if (ship, x, y) != (p["ship"], p["x"], p["y"])]
 
 
-# Keluaran: list vid placed yang w != l.
+# Daftar vid placed yang w != l.
 # Rotasi vehicle persegi (w == l) tidak mengubah apa-apa, jadi opsinya dibuang.
 def rotatable_vehicles(state):
     return [vid for vid in state.placed_vehicles() if state.vehicles[vid]["w"] != state.vehicles[vid]["l"]]
 
 
-# Memilih satu vehicle placed secara random untuk dikeluarkan.
-# Keluaran: (vid,), atau None kalau tidak ada vehicle placed.
-def pick_remove(state, rng):
-    placed = state.placed_vehicles()
-    if not placed:
-        return None
-    return (rng.choice(placed),)
-
-
 # Memilih pasangan vehicle random untuk di-swap.
 # a selalu vehicle placed, karena swap dua vehicle yang sama-sama OUTSIDE tidak mengubah state.
-# Keluaran: (a, b), atau None kalau tidak ada vehicle placed atau vehicle kurang dari dua.
+# Output (a, b), atau None kalau tidak ada vehicle placed atau vehicle kurang dari dua.
 def pick_swap(state, rng):
     placed = state.placed_vehicles()
     if not placed or len(state.order) < 2:
@@ -90,7 +72,7 @@ def pick_swap(state, rng):
 
 
 # Memilih satu vehicle random yang bisa dirotasi.
-# Keluaran: (vid,), atau None kalau tidak ada kandidat.
+# Output (vid,), atau None kalau tidak ada kandidat.
 def pick_rotate(state, rng):
     candidates = rotatable_vehicles(state)
     if not candidates:
@@ -99,28 +81,35 @@ def pick_rotate(state, rng):
 
 
 # Memilih vid, ship, dan posisi baru secara random.
-# Kandidat = pasangan (vid, ship) yang punya minimal satu posisi selain posisi sekarang.
-# Keluaran: (vid, ship, x, y), atau None kalau tidak ada kandidat.
+# Pasangan (vid, ship) diambil dari yang ukurannya muat, lalu x dan y diacak langsung.
+# Kalau kebetulan sama dengan posisi sekarang, diacak ulang.
+# Output (vid, ship, x, y), atau None kalau tidak ada vehicle yang muat di ship mana pun.
 def pick_relocate(state, rng):
-    candidates = [(vid, ship) for vid in state.order for ship in state.ships
-                  if relocate_positions(state, vid, ship)]
-    if not candidates:
+    pairs = [(vid, ship) for vid in state.order for ship in state.ships
+             if fits(state.vehicles[vid], state.placement[vid]["orient"], state.ships[ship])]
+    if not pairs:
         return None
-    vid, ship = rng.choice(candidates)
-    x, y = rng.choice(relocate_positions(state, vid, ship))
-    return vid, ship, x, y
+    for _ in range(100):
+        vid, ship = rng.choice(pairs)
+        p = state.placement[vid]
+        w, l = footprint(state.vehicles[vid], p["orient"])
+        x = rng.randint(1, state.ships[ship]["w"] - w + 1)
+        y = rng.randint(1, state.ships[ship]["l"] - l + 1)
+        if (ship, x, y) != (p["ship"], p["x"], p["y"]):
+            return vid, ship, x, y
+    return None
 
 
-PICKERS = {"swap": pick_swap, "relocate": pick_relocate, "rotate": pick_rotate, "remove": pick_remove}
-APPLIERS = {"swap": swap_move, "relocate": place_move, "rotate": rotate_move, "remove": remove_from_ship}
+PICKERS = {"swap": pick_swap, "relocate": pick_relocate, "rotate": pick_rotate}
+APPLIERS = {"swap": swap_move, "relocate": place_move, "rotate": rotate_move}
 
 
-# Keluaran: satu neighbor random, atau None kalau tidak ada move yang mungkin.
+# Satu neighbor random, atau None kalau tidak ada move yang mungkin.
 # Jenis move dipilih dulu sesuai MOVE_WEIGHTS, lalu detailnya dipilih fungsi pick_.
 # Kalau satu jenis move tidak punya pilihan, jenis itu dicoret dan jenis lain dicoba.
 # Neighbor tidak disaring: yang melanggar constraint tetap dikembalikan dan bernilai 0.
 def random_neighbor(state, rng):
-    types = [t for t in MOVE_WEIGHTS if MOVE_WEIGHTS[t] > 0]
+    types = list(MOVE_WEIGHTS)
     while types:
         move_type = rng.choices(types, weights=[MOVE_WEIGHTS[t] for t in types])[0]
         args = PICKERS[move_type](state, rng)
@@ -130,30 +119,19 @@ def random_neighbor(state, rng):
     return None
 
 
-# Generator semua neighbor sebagai (deskripsi move, state baru), termasuk yang tidak feasible.
-# Hanya move type dengan MOVE_WEIGHTS > 0; pakai yield supaya tidak semua neighbor disimpan sekaligus.
+# Generator semua neighbor sebagai (vid yang dipindah, state baru), termasuk yang tidak feasible.
+# vid yang dipindah dipakai hill climbing supaya cukup mengecek vehicle itu saja.
 #   rotate   : tiap vehicle placed yang w != l
 #   relocate : tiap vid x tiap ship x tiap posisi, tanpa posisi sekarang
 #   swap     : tiap pasangan (a, b) dengan i < j, dilewati kalau dua-duanya OUTSIDE
-#   remove   : tiap vehicle placed
 def all_neighbors(state):
-    if MOVE_WEIGHTS["rotate"] > 0:
-        for vid in rotatable_vehicles(state):
-            yield ("rotate", vid), rotate_move(state, vid)
-
-    if MOVE_WEIGHTS["relocate"] > 0:
-        for vid in state.order:
-            for ship in state.ships:
-                for x, y in relocate_positions(state, vid, ship):
-                    yield ("relocate", vid, ship, x, y), place_move(state, vid, ship, x, y)
-
-    if MOVE_WEIGHTS["swap"] > 0:
-        for i, a in enumerate(state.order):
-            for b in state.order[i + 1:]:
-                if state.placement[a]["ship"] == OUTSIDE and state.placement[b]["ship"] == OUTSIDE:
-                    continue
-                yield ("swap", a, b), swap_move(state, a, b)
-
-    if MOVE_WEIGHTS["remove"] > 0:
-        for vid in state.placed_vehicles():
-            yield ("remove", vid), remove_from_ship(state, vid)
+    for vid in rotatable_vehicles(state):
+        yield (vid,), rotate_move(state, vid)
+    for vid in state.order:
+        for ship in state.ships:
+            for x, y in relocate_positions(state, vid, ship):
+                yield (vid,), place_move(state, vid, ship, x, y)
+    for i, a in enumerate(state.order):
+        for b in state.order[i + 1:]:
+            if state.placement[a]["ship"] != OUTSIDE or state.placement[b]["ship"] != OUTSIDE:
+                yield (a, b), swap_move(state, a, b)
