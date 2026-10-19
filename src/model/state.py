@@ -73,7 +73,7 @@ class DockState:
     def random_neighbor(self, rng):
         return moves.random_neighbor(self, rng)
 
-    # Keluaran: generator (deskripsi move, state baru) untuk semua neighbor.
+    # Generator (vid yang dipindah, state baru) untuk semua neighbor.
     # Untuk algoritma yang butuh semua neighbor.
     def all_neighbors(self):
         return moves.all_neighbors(self)

@@ -13,28 +13,24 @@ def rectangles_overlap(ax, ay, aw, al, bx, by, bw, bl):
 
 # Cek apakah satu vehicle boleh ditaruh di (ship, x, y, orient) tanpa melanggar constraint,
 # dengan menganggap posisi vehicle itu sendiri sekarang kosong.
-# Yang dicek: di dalam geladak, capacity ship tidak terlewati, tidak overlap dengan vehicle lain.
-# Dipakai initial_state supaya state awal pasti feasible.
+# Yang dicek: di dalam deck, capacity ship tidak terlewati, tidak overlap dengan vehicle lain.
+# Berat dan overlap dicek dalam satu loop atas vehicle lain di ship yang sama.
+# Dipakai initial_state, hill climbing, dan repair GA.
 def can_place(state, vid, ship, x, y, orient):
     ship_info = state.ships[ship]
     w, l = footprint(state.vehicles[vid], orient)
     if x < 1 or y < 1 or x + w - 1 > ship_info["w"] or y + l - 1 > ship_info["l"]:
         return False
-
-    load = state.ship_load(ship)
-    if state.placement[vid]["ship"] == ship:
-        load -= state.vehicles[vid]["weight"]
-    if load + state.vehicles[vid]["weight"] > ship_info["capacity"]:
-        return False
-
-    for other in state.placed_vehicles():
+    load = state.vehicles[vid]["weight"]
+    for other in state.order:
         p = state.placement[other]
         if other == vid or p["ship"] != ship:
             continue
+        load += state.vehicles[other]["weight"]
         ow, ol = footprint(state.vehicles[other], p["orient"])
         if rectangles_overlap(x, y, w, l, p["x"], p["y"], ow, ol):
             return False
-    return True
+    return load <= ship_info["capacity"]
 
 
 # tidak boleh ada bagian satu kendaraan yang ada diluar kapal
