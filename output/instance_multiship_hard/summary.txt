@@ -1,39 +1,39 @@
-populasi=50  , iterasi=50  : final=[905, 825, 885] rata-rata=871.7 durasi rata-rata=0.57s
-populasi=50  , iterasi=100 : final=[905, 830, 890] rata-rata=875.0 durasi rata-rata=1.12s
-populasi=50  , iterasi=200 : final=[920, 835, 895] rata-rata=883.3 durasi rata-rata=2.21s
-populasi=20  , iterasi=100 : final=[870, 840, 815] rata-rata=841.7 durasi rata-rata=0.44s
-populasi=50  , iterasi=100 : final=[905, 830, 890] rata-rata=875.0 durasi rata-rata=1.11s
-populasi=100 , iterasi=100 : final=[890, 835, 865] rata-rata=863.3 durasi rata-rata=2.07s
-steepest_ascent      run1 seed945   670 ->   945  iterasi=8     durasi=0.56s  {'stop_reason': 'local_maximum'}
-steepest_ascent      run2 seed946   750 ->   965  iterasi=10    durasi=0.75s  {'stop_reason': 'local_maximum'}
-steepest_ascent      run3 seed947   745 ->   955  iterasi=8     durasi=0.58s  {'stop_reason': 'local_maximum'}
-stochastic           run1 seed945   670 ->   950  iterasi=18    durasi=1.33s  {'stop_reason': 'local_maximum'}
-stochastic           run2 seed946   750 ->   935  iterasi=11    durasi=0.88s  {'stop_reason': 'local_maximum'}
-stochastic           run3 seed947   745 ->   955  iterasi=9     durasi=0.74s  {'stop_reason': 'local_maximum'}
-sideways_move        run1 seed945   670 ->  1015  iterasi=163   durasi=11.40s  {'stop_reason': 'max_sideways', 'total_sideways': 147}
-sideways_move        run2 seed946   750 ->  1000  iterasi=192   durasi=13.75s  {'stop_reason': 'max_sideways', 'total_sideways': 177}
-sideways_move        run3 seed947   745 ->  1045  iterasi=258   durasi=17.14s  {'stop_reason': 'max_sideways', 'total_sideways': 243}
-random_restart       run1 seed945   670 ->   990  iterasi=90    durasi=6.85s  {'restarts': 10, 'iterations_per_restart': [8, 7, 7, 7, 6, 11, 11, 8, 7, 11, 7]}
-random_restart       run2 seed946   750 ->   975  iterasi=80    durasi=6.11s  {'restarts': 10, 'iterations_per_restart': [10, 4, 9, 9, 6, 6, 12, 3, 6, 6, 9]}
-random_restart       run3 seed947   745 ->  1000  iterasi=98    durasi=7.57s  {'restarts': 10, 'iterations_per_restart': [8, 7, 10, 8, 7, 9, 9, 9, 10, 10, 11]}
-simulated_annealing  run1 seed945   670 ->   890  iterasi=917   durasi=0.06s  {'last_value': 890, 'rejected_count': 770, 'stuck_count': 9, 'stagnation_iterations': 115}
-simulated_annealing  run2 seed946   750 ->   885  iterasi=917   durasi=0.07s  {'last_value': 885, 'rejected_count': 793, 'stuck_count': 5, 'stagnation_iterations': 4}
-simulated_annealing  run3 seed947   745 ->   870  iterasi=917   durasi=0.07s  {'last_value': 870, 'rejected_count': 799, 'stuck_count': 4, 'stagnation_iterations': 59}
-genetic_algorithm    run1 seed945   670 ->   905  iterasi=50    durasi=0.68s  {'population_size': 50}
-genetic_algorithm    run2 seed946   750 ->   825  iterasi=50    durasi=0.49s  {'population_size': 50}
-genetic_algorithm    run3 seed947   745 ->   885  iterasi=50    durasi=0.52s  {'population_size': 50}
-genetic_algorithm    run1 seed945   670 ->   905  iterasi=100   durasi=1.23s  {'population_size': 50}
-genetic_algorithm    run2 seed946   750 ->   830  iterasi=100   durasi=1.08s  {'population_size': 50}
-genetic_algorithm    run3 seed947   745 ->   890  iterasi=100   durasi=1.05s  {'population_size': 50}
-genetic_algorithm    run1 seed945   670 ->   920  iterasi=200   durasi=2.26s  {'population_size': 50}
-genetic_algorithm    run2 seed946   750 ->   835  iterasi=200   durasi=2.25s  {'population_size': 50}
-genetic_algorithm    run3 seed947   745 ->   895  iterasi=200   durasi=2.10s  {'population_size': 50}
-genetic_algorithm    run1 seed945   670 ->   870  iterasi=100   durasi=0.48s  {'population_size': 20}
-genetic_algorithm    run2 seed946   750 ->   840  iterasi=100   durasi=0.45s  {'population_size': 20}
-genetic_algorithm    run3 seed947   745 ->   815  iterasi=100   durasi=0.39s  {'population_size': 20}
-genetic_algorithm    run1 seed945   670 ->   905  iterasi=100   durasi=1.21s  {'population_size': 50}
-genetic_algorithm    run2 seed946   750 ->   830  iterasi=100   durasi=1.08s  {'population_size': 50}
-genetic_algorithm    run3 seed947   745 ->   890  iterasi=100   durasi=1.04s  {'population_size': 50}
-genetic_algorithm    run1 seed945   670 ->   890  iterasi=100   durasi=2.36s  {'population_size': 100}
-genetic_algorithm    run2 seed946   750 ->   835  iterasi=100   durasi=1.88s  {'population_size': 100}
-genetic_algorithm    run3 seed947   745 ->   865  iterasi=100   durasi=1.97s  {'population_size': 100}
+populasi=50  , iterasi=50  : final=[905, 825, 885] rata-rata=871.7 durasi rata-rata=0.90s
+populasi=50  , iterasi=100 : final=[905, 830, 890] rata-rata=875.0 durasi rata-rata=1.68s
+populasi=50  , iterasi=200 : final=[920, 835, 895] rata-rata=883.3 durasi rata-rata=2.64s
+populasi=20  , iterasi=100 : final=[870, 840, 815] rata-rata=841.7 durasi rata-rata=0.49s
+populasi=50  , iterasi=100 : final=[905, 830, 890] rata-rata=875.0 durasi rata-rata=1.33s
+populasi=100 , iterasi=100 : final=[890, 835, 865] rata-rata=863.3 durasi rata-rata=3.29s
+steepest_ascent      run1 seed945   670 ->   945  iterasi=8     durasi=0.81s  {'stop_reason': 'local_maximum'}
+steepest_ascent      run2 seed946   750 ->   965  iterasi=10    durasi=1.17s  {'stop_reason': 'local_maximum'}
+steepest_ascent      run3 seed947   745 ->   955  iterasi=8     durasi=0.89s  {'stop_reason': 'local_maximum'}
+stochastic           run1 seed945   670 ->   950  iterasi=18    durasi=1.89s  {'stop_reason': 'local_maximum'}
+stochastic           run2 seed946   750 ->   935  iterasi=11    durasi=1.03s  {'stop_reason': 'local_maximum'}
+stochastic           run3 seed947   745 ->   955  iterasi=9     durasi=0.61s  {'stop_reason': 'local_maximum'}
+sideways_move        run1 seed945   670 ->  1015  iterasi=163   durasi=13.09s  {'stop_reason': 'max_sideways', 'total_sideways': 147}
+sideways_move        run2 seed946   750 ->  1000  iterasi=192   durasi=20.14s  {'stop_reason': 'max_sideways', 'total_sideways': 177}
+sideways_move        run3 seed947   745 ->  1045  iterasi=258   durasi=25.08s  {'stop_reason': 'max_sideways', 'total_sideways': 243}
+random_restart       run1 seed945   670 ->   990  iterasi=90    durasi=10.20s  {'restarts': 10, 'iterations_per_restart': [8, 7, 7, 7, 6, 11, 11, 8, 7, 11, 7]}
+random_restart       run2 seed946   750 ->   975  iterasi=80    durasi=9.20s  {'restarts': 10, 'iterations_per_restart': [10, 4, 9, 9, 6, 6, 12, 3, 6, 6, 9]}
+random_restart       run3 seed947   745 ->  1000  iterasi=98    durasi=10.88s  {'restarts': 10, 'iterations_per_restart': [8, 7, 10, 8, 7, 9, 9, 9, 10, 10, 11]}
+simulated_annealing  run1 seed945   670 ->   890  iterasi=917   durasi=0.10s  {'last_value': 890, 'rejected_count': 770, 'stuck_count': 9, 'stagnation_iterations': 115}
+simulated_annealing  run2 seed946   750 ->   885  iterasi=917   durasi=0.11s  {'last_value': 885, 'rejected_count': 793, 'stuck_count': 5, 'stagnation_iterations': 4}
+simulated_annealing  run3 seed947   745 ->   870  iterasi=917   durasi=0.10s  {'last_value': 870, 'rejected_count': 799, 'stuck_count': 4, 'stagnation_iterations': 59}
+genetic_algorithm    run1 seed945   670 ->   905  iterasi=50    durasi=1.00s  {'population_size': 50}
+genetic_algorithm    run2 seed946   750 ->   825  iterasi=50    durasi=0.83s  {'population_size': 50}
+genetic_algorithm    run3 seed947   745 ->   885  iterasi=50    durasi=0.88s  {'population_size': 50}
+genetic_algorithm    run1 seed945   670 ->   905  iterasi=100   durasi=1.76s  {'population_size': 50}
+genetic_algorithm    run2 seed946   750 ->   830  iterasi=100   durasi=1.66s  {'population_size': 50}
+genetic_algorithm    run3 seed947   745 ->   890  iterasi=100   durasi=1.62s  {'population_size': 50}
+genetic_algorithm    run1 seed945   670 ->   920  iterasi=200   durasi=3.00s  {'population_size': 50}
+genetic_algorithm    run2 seed946   750 ->   835  iterasi=200   durasi=2.42s  {'population_size': 50}
+genetic_algorithm    run3 seed947   745 ->   895  iterasi=200   durasi=2.49s  {'population_size': 50}
+genetic_algorithm    run1 seed945   670 ->   870  iterasi=100   durasi=0.45s  {'population_size': 20}
+genetic_algorithm    run2 seed946   750 ->   840  iterasi=100   durasi=0.43s  {'population_size': 20}
+genetic_algorithm    run3 seed947   745 ->   815  iterasi=100   durasi=0.58s  {'population_size': 20}
+genetic_algorithm    run1 seed945   670 ->   905  iterasi=100   durasi=1.44s  {'population_size': 50}
+genetic_algorithm    run2 seed946   750 ->   830  iterasi=100   durasi=1.07s  {'population_size': 50}
+genetic_algorithm    run3 seed947   745 ->   890  iterasi=100   durasi=1.48s  {'population_size': 50}
+genetic_algorithm    run1 seed945   670 ->   890  iterasi=100   durasi=3.63s  {'population_size': 100}
+genetic_algorithm    run2 seed946   750 ->   835  iterasi=100   durasi=3.04s  {'population_size': 100}
+genetic_algorithm    run3 seed947   745 ->   865  iterasi=100   durasi=3.20s  {'population_size': 100}
