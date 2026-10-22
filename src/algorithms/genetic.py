@@ -2,7 +2,7 @@ from .base import SearchRecorder
 from ..model.instance import OUTSIDE
 from ..model.objective import evaluate
 from ..model.state import DockState
-from ..model.constraints import can_place
+from ..model.constraints import is_feasible
 
 
 # Crossover satu titik: gen [0, k) dari parent_a dan gen [k, n) dari parent_b.
@@ -17,8 +17,8 @@ def one_point_crossover(parent_a, parent_b, rng):
 # Crossover/mutasi sering menghasilkan overlap, keluar geladak, atau overweight.
 # Padahal state yang melanggar bernilai 0 di evaluate sehingga populasi mudah penuh nilai 0 (plateau).
 # Cara kerja: mulai dari state kosong (semua OUTSIDE),
-# lalu tiap gen yang minta masuk ship dicoba ditaruh dengan can_place sesuai urutan gen;
-# yang gagal tetap OUTSIDE.
+# lalu tiap gen yang minta masuk ship ditaruh sesuai urutan gen dan dicek dengan is_feasible;
+# kalau melanggar, gen itu dibatalkan dan kendaraannya tetap OUTSIDE.
 # Masukan: template (DockState acuan), chromosome.
 # Keluaran: DockState feasible.
 def repair(template, chromosome):
@@ -32,8 +32,10 @@ def repair(template, chromosome):
     for vid, gene in zip(state.order, chromosome):
         if gene["ship"] == OUTSIDE:
             continue
-        if can_place(state, vid, gene["ship"], gene["x"], gene["y"], gene["orient"]):
-            state.placement[vid] = dict(gene)
+        outside = state.placement[vid]
+        state.placement[vid] = dict(gene)
+        if not is_feasible(state):
+            state.placement[vid] = outside
     return state
 
 
@@ -68,9 +70,8 @@ def mutate(state, rng):
 # Representasi: chromosome = state.to_chromosome(), satu gen {ship, x, y, orient} per vehicle.
 # Fitness: evaluate(state) = total fee kalau feasible.
 # Populasi awal: initial_state + (population_size - 1) state random feasible.
-# Tiap generasi: elitism (elite individu terbaik langsung lolos, default 1),
-# lalu anak dibuat dari roulette wheel -> # one-point crossover (peluang crossover_rate) ->
-# mutasi (peluang mutation_rate) -> repair supaya feasible.
+# Tiap generasi: dua parent dipilih dengan roulette wheel ->
+# one-point crossover (peluang crossover_rate) -> mutasi (peluang mutation_rate) -> repair supaya feasible.
 # Karena elitism, nilai maksimum populasi tidak pernah turun antar generasi.
 # Masukan: initial_state, rng, population_size, iterations (= jumlah generasi),
 # dan parameter tambahan (crossover_rate, mutation_rate, elite).
