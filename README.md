@@ -37,11 +37,13 @@ Tanpa argumen, perintah itu membuat ulang empat instance uji di `data/`.
 
 ## Pembagian Tugas
 
-| Nama | NIM | Tugas |
+| Nama | NIM | Kontribusi |
 |---|---|---|
-| Rafi | 18224004 | model, moves, hill climbing, CLI dan visualisasi |
-| Elnora | 18224125 | genetic algorithm dan eksperimen GA, full dokumen|
-| Arkandhaf | 18224116 | simulated annealing, full dokumen |
+| M Rafi' Abdurrahman | 18224004 | Pembuatan model, pembuatan constraint, implementasi hill climbing, eksperimen hill climbing, proofread dokumen, integrasi implementasi |
+| Muhammad Arkan Dhaifullah | 18224116 | Implementasi dan revisi SA, eksperimen dan analisis SA, penyusunan laporan SA |
+| Rachel Elnora Mannuelle Sidanta | 18224125 | Implementasi genetic algorithm, eksperimen dan analisis genetic algorithm, formatting dokumen laporan, proofread dokumen, penyesuaian tabel |
+
+Laporan lengkap ada di `docs/IF3070_G03_ratakiri.pdf`.
 
 ## Referensi
 
