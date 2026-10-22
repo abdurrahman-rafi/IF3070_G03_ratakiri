@@ -32,6 +32,7 @@ def run_repeated(algorithm, instance_path, n_runs=3, base_seed=945, out_dir="out
 # Lokasi: out_dir/instance/<algorithm>/run<run>_seed<seed>_<params>.json.
 # Nama instance ada di path supaya hasil dari instance berbeda tidak saling menimpa.
 # Params ada di nama file supaya variasi nama parameter tidak saling menimpa.
+# JSON ditulis ringkas tanpa indentasi supaya history yang panjang tidak membuat ribuan baris.
 # Keluaran: path file yang ditulis.
 def save_result(result, out_dir="output"):
     instance_name = os.path.splitext(result.get("instance", "unknown"))[0]
@@ -41,5 +42,5 @@ def save_result(result, out_dir="output"):
     name = f"run{result['run']}_seed{result['seed']}_{param_text}.json"
     path = os.path.join(folder, name)
     with open(path, "w", encoding="utf-8") as out_file:
-        json.dump(result, out_file, indent=2)
+        json.dump(result, out_file)
     return path
