@@ -1,6 +1,3 @@
-import textwrap
-
-import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
 from ..model.instance import OUTSIDE, footprint
@@ -8,9 +5,8 @@ from ..model.state import DockState
 from ..model.constraints import is_feasible
 
 
-# Menggambar geladak satu ship: grid W x L, tiap vehicle sebagai kotak berlabel id.
+# Menggambar deck satu ship: grid W x L, tiap vehicle sebagai kotak berlabel id dan orientasi.
 # Sel (x, y) 1-indexed digambar di [x-1, x] x [y-1, y], jadi titik kiri bawah tetap di (x, y).
-# Masukan: ax matplotlib, state, id ship, colors {vid: warna}.
 def draw_ship(ax, state, ship, colors):
     ship_info = state.ships[ship]
     for vid in state.placed_vehicles():
@@ -33,31 +29,22 @@ def draw_ship(ax, state, ship, colors):
                  f"load {state.ship_load(ship)}/{ship_info['capacity']}", fontsize=9)
 
 
-# Menyimpan gambar initial state (kiri) dan final state (kanan) dari satu hasil run.
-# Tiap kolom: geladak semua ship, value state, dan daftar vehicle yang di luar kapal.
-# Masukan: result (dict hasil algoritma), vehicles, ships, path file png.
-def plot_state(result, vehicles, ships, path):
-    columns = [("Initial", result["initial"], result["initial_value"]),
-               ("Final", result["final"], result["final_value"])]
-    cmap = plt.get_cmap("tab20")
-    colors = {vid: cmap(i % 20) for i, vid in enumerate(sorted(vehicles))}
-    ratio = max(ship["l"] / ship["w"] for ship in ships.values())
-    panel = 3.5
-    fig, axes = plt.subplots(len(ships), 2, squeeze=False,
-                             figsize=(2 * panel + 1, len(ships) * min(panel * ratio, 9) + 2))
-
-    for column, (label, placement, value) in enumerate(columns):
-        state = DockState(vehicles, ships, {vid: dict(p) for vid, p in placement.items()})
-        for row, ship in enumerate(ships):
-            draw_ship(axes[row][column], state, ship, colors)
-        feasible = "" if is_feasible(state) else " (tidak feasible)"
-        axes[0][column].set_title(f"{label}: value {value}{feasible}\n" + axes[0][column].get_title(),
-                                  fontsize=10)
-        outside = [vid for vid in state.order if state.placement[vid]["ship"] == OUTSIDE]
-        axes[-1][column].set_xlabel(textwrap.fill("Di luar: " + (", ".join(outside) or "-"), 45),
-                                    fontsize=8)
-
-    fig.suptitle(f"{result['algorithm']} - run {result.get('run', '-')}, seed {result.get('seed', '-')}")
-    fig.tight_layout()
-    fig.savefig(path, dpi=120)
-    plt.close(fig)
+# Menggambar satu state (initial atau final) di satu subfigure: deck semua ship disusun ke bawah,
+# value state di judul, dan kotak daftar vehicle di luar kapal paling bawah
+# (id, ukuran w x l, fee, dan berat tiap vehicle).
+# list_height adalah tinggi kotak daftar, dibuat sama untuk initial dan final supaya deck sejajar.
+def draw_state(subfig, vehicles, ships, placement, label, value, colors, list_height):
+    state = DockState(vehicles, ships, placement)
+    ratios = [ship["l"] / ship["w"] for ship in ships.values()] + [list_height]
+    axes = subfig.subplots(len(ratios), 1, squeeze=False, height_ratios=ratios)[:, 0]
+    for ax, ship in zip(axes, ships):
+        draw_ship(ax, state, ship, colors)
+    feasible = "" if is_feasible(state) else " (tidak feasible)"
+    subfig.suptitle(f"{label}: value {value}{feasible}", fontsize=11)
+    outside = [vid for vid in state.order if state.placement[vid]["ship"] == OUTSIDE]
+    lines = [f"{vid}  {vehicles[vid]['w']}x{vehicles[vid]['l']}  fee {vehicles[vid]['fee']}  "
+             f"berat {vehicles[vid]['weight']}" for vid in outside]
+    axes[-1].axis("off")
+    axes[-1].text(0.5, 1, "\n".join([f"Di luar kapal ({len(outside)})"] + (lines or ["-"])),
+                  ha="center", va="top", fontsize=8, family="monospace", linespacing=1.4,
+                  bbox={"boxstyle": "round", "facecolor": "whitesmoke", "edgecolor": "gray"})
