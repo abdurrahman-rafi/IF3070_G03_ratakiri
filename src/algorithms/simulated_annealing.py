@@ -1,3 +1,6 @@
+# Pseudocode dan implementasi diambil dari S. Russell dan P. Norvig, Artificial Intelligence: A Modern Approach, ed. ke-4, Bab 4,
+# serta M. L. Khodra, "Beyond Classical Search: Simulated Annealing", YouTube, 2021.
+
 import math
 
 from .base import SearchRecorder
