@@ -69,7 +69,7 @@ def mutate(state, rng):
 # Fitness: evaluate(state) = total fee kalau feasible.
 # Populasi awal: initial_state + (population_size - 1) state random feasible.
 # Tiap generasi: elitism (elite individu terbaik langsung lolos, default 1),
-# lalu anak dibuat dari roulette wheel -> # one-point crossover (peluang crossover_rate) ->
+# lalu anak dibuat dari roulette wheel -> one-point crossover (peluang crossover_rate) ->
 # mutasi (peluang mutation_rate) -> repair supaya feasible.
 # Karena elitism, nilai maksimum populasi tidak pernah turun antar generasi.
 # Masukan: initial_state, rng, population_size, iterations (= jumlah generasi),
