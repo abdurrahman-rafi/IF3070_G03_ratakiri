@@ -20,12 +20,13 @@ ALGORITHMS = {
     "stochastic": (hill_climbing.stochastic, ("max_iterations",)),
     "sideways": (hill_climbing.sideways_move, ("max_sideways", "max_iterations")),
     "restart": (hill_climbing.random_restart, ("max_restart", "max_iterations")),
-    "sa": (simulated_annealing, ("initial_temp", "cooling_rate", "min_temp")),
+    "sa": (simulated_annealing, ("initial_temp", "cooling_rate", "min_temp", "stagnation_limit")),
     "ga": (genetic_algorithm, ("population_size", "iterations", "crossover_rate", "mutation_rate")),
 }
 PARAMETER_TYPES = {
     "max_iterations": int, "max_sideways": int, "max_restart": int,
     "initial_temp": float, "cooling_rate": float, "min_temp": float,
+    "stagnation_limit": int,
     "population_size": int, "iterations": int, "crossover_rate": float, "mutation_rate": float,
 }
 
