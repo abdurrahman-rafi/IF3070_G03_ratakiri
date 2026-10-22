@@ -5,9 +5,11 @@ from .runner import run_repeated
 from ..algorithms.genetic import genetic_algorithm
 
 # Eksperimen GA sesuai spesifikasi: 2 skenario * 3 variasi * 3 run = 18 run.
-CONTROL_POPULATION = 50 # skenario 1: populasi tetap, iterasi divariasikan
+# Skenario 1: populasi tetap CONTROL_POPULATION, iterasi divariasikan ITERATION_VARIANTS.
+# Skenario 2: iterasi tetap CONTROL_ITERATIONS, populasi divariasikan POPULATION_VARIANTS.
+CONTROL_POPULATION = 50
 ITERATION_VARIANTS = (50, 100, 200)
-CONTROL_ITERATIONS = 100 # skenario 2: iterasi tetap, populasi divariasikan
+CONTROL_ITERATIONS = 100
 POPULATION_VARIANTS = (20, 50, 100)
 
 

@@ -1,3 +1,6 @@
+# Pseudocode dan implementasi diambil dari S. Russell dan P. Norvig, Artificial Intelligence: A Modern Approach, ed. ke-4, Bab 4,
+# serta M. L. Khodra, "Beyond Classical Search: Genetic Algorithm", YouTube, 2021.
+
 from .base import SearchRecorder
 from ..model.instance import OUTSIDE
 from ..model.objective import evaluate
