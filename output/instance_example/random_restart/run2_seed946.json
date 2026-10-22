@@ -1,0 +1,273 @@
+{
+  "algorithm": "random_restart",
+  "params": {
+    "max_restart": 10,
+    "max_iterations": 1000
+  },
+  "initial": {
+    "V01": {
+      "ship": 0,
+      "x": 2,
+      "y": 10,
+      "orient": "H"
+    },
+    "V02": {
+      "ship": 0,
+      "x": 1,
+      "y": 1,
+      "orient": "V"
+    },
+    "V03": {
+      "ship": 0,
+      "x": 1,
+      "y": 17,
+      "orient": "V"
+    },
+    "V04": {
+      "ship": 0,
+      "x": 5,
+      "y": 6,
+      "orient": "V"
+    },
+    "V05": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "V"
+    },
+    "V06": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    },
+    "V07": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    },
+    "V08": {
+      "ship": 0,
+      "x": 5,
+      "y": 12,
+      "orient": "H"
+    },
+    "V09": {
+      "ship": 0,
+      "x": 5,
+      "y": 3,
+      "orient": "V"
+    },
+    "V10": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    }
+  },
+  "initial_value": 370,
+  "final": {
+    "V01": {
+      "ship": 0,
+      "x": 2,
+      "y": 8,
+      "orient": "H"
+    },
+    "V02": {
+      "ship": 0,
+      "x": 3,
+      "y": 12,
+      "orient": "H"
+    },
+    "V03": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    },
+    "V04": {
+      "ship": 0,
+      "x": 7,
+      "y": 15,
+      "orient": "H"
+    },
+    "V05": {
+      "ship": 0,
+      "x": 3,
+      "y": 17,
+      "orient": "V"
+    },
+    "V06": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "V"
+    },
+    "V07": {
+      "ship": 0,
+      "x": 2,
+      "y": 6,
+      "orient": "V"
+    },
+    "V08": {
+      "ship": 0,
+      "x": 7,
+      "y": 11,
+      "orient": "V"
+    },
+    "V09": {
+      "ship": 0,
+      "x": 5,
+      "y": 7,
+      "orient": "V"
+    },
+    "V10": {
+      "ship": 0,
+      "x": 2,
+      "y": 1,
+      "orient": "V"
+    }
+  },
+  "final_value": 495,
+  "final_feasible": true,
+  "best_feasible": {
+    "V01": {
+      "ship": 0,
+      "x": 2,
+      "y": 8,
+      "orient": "H"
+    },
+    "V02": {
+      "ship": 0,
+      "x": 3,
+      "y": 12,
+      "orient": "H"
+    },
+    "V03": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    },
+    "V04": {
+      "ship": 0,
+      "x": 7,
+      "y": 15,
+      "orient": "H"
+    },
+    "V05": {
+      "ship": 0,
+      "x": 3,
+      "y": 17,
+      "orient": "V"
+    },
+    "V06": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "V"
+    },
+    "V07": {
+      "ship": 0,
+      "x": 2,
+      "y": 6,
+      "orient": "V"
+    },
+    "V08": {
+      "ship": 0,
+      "x": 7,
+      "y": 11,
+      "orient": "V"
+    },
+    "V09": {
+      "ship": 0,
+      "x": 5,
+      "y": 7,
+      "orient": "V"
+    },
+    "V10": {
+      "ship": 0,
+      "x": 2,
+      "y": 1,
+      "orient": "V"
+    }
+  },
+  "best_feasible_value": 495,
+  "history": [
+    370,
+    425,
+    465,
+    485,
+    275,
+    365,
+    435,
+    495,
+    235,
+    325,
+    390,
+    450,
+    470,
+    305,
+    370,
+    425,
+    460,
+    480,
+    315,
+    405,
+    450,
+    485,
+    220,
+    290,
+    355,
+    415,
+    460,
+    495,
+    70,
+    180,
+    270,
+    335,
+    395,
+    450,
+    470,
+    355,
+    415,
+    470,
+    375,
+    440,
+    480,
+    370,
+    430,
+    475,
+    495,
+    230,
+    300,
+    365,
+    425,
+    460,
+    480
+  ],
+  "avg_history": [],
+  "accept_probs": [],
+  "iterations": 40,
+  "duration_sec": 0.4113170659984462,
+  "extra": {
+    "restarts": 10,
+    "iterations_per_restart": [
+      3,
+      3,
+      4,
+      4,
+      3,
+      5,
+      6,
+      2,
+      2,
+      3,
+      5
+    ]
+  },
+  "seed": 946,
+  "run": 2,
+  "instance": "instance_example.json"
+}

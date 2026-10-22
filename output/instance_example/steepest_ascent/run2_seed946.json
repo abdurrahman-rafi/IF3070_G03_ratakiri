@@ -1,0 +1,212 @@
+{
+  "algorithm": "steepest_ascent",
+  "params": {
+    "max_iterations": 1000
+  },
+  "initial": {
+    "V01": {
+      "ship": 0,
+      "x": 2,
+      "y": 10,
+      "orient": "H"
+    },
+    "V02": {
+      "ship": 0,
+      "x": 1,
+      "y": 1,
+      "orient": "V"
+    },
+    "V03": {
+      "ship": 0,
+      "x": 1,
+      "y": 17,
+      "orient": "V"
+    },
+    "V04": {
+      "ship": 0,
+      "x": 5,
+      "y": 6,
+      "orient": "V"
+    },
+    "V05": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "V"
+    },
+    "V06": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    },
+    "V07": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    },
+    "V08": {
+      "ship": 0,
+      "x": 5,
+      "y": 12,
+      "orient": "H"
+    },
+    "V09": {
+      "ship": 0,
+      "x": 5,
+      "y": 3,
+      "orient": "V"
+    },
+    "V10": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    }
+  },
+  "initial_value": 370,
+  "final": {
+    "V01": {
+      "ship": 0,
+      "x": 2,
+      "y": 10,
+      "orient": "H"
+    },
+    "V02": {
+      "ship": 0,
+      "x": 1,
+      "y": 1,
+      "orient": "V"
+    },
+    "V03": {
+      "ship": 0,
+      "x": 1,
+      "y": 17,
+      "orient": "V"
+    },
+    "V04": {
+      "ship": 0,
+      "x": 5,
+      "y": 6,
+      "orient": "V"
+    },
+    "V05": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "V"
+    },
+    "V06": {
+      "ship": 0,
+      "x": 2,
+      "y": 3,
+      "orient": "H"
+    },
+    "V07": {
+      "ship": 0,
+      "x": 8,
+      "y": 1,
+      "orient": "H"
+    },
+    "V08": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    },
+    "V09": {
+      "ship": 0,
+      "x": 5,
+      "y": 3,
+      "orient": "V"
+    },
+    "V10": {
+      "ship": 0,
+      "x": 5,
+      "y": 12,
+      "orient": "H"
+    }
+  },
+  "final_value": 485,
+  "final_feasible": true,
+  "best_feasible": {
+    "V01": {
+      "ship": 0,
+      "x": 2,
+      "y": 10,
+      "orient": "H"
+    },
+    "V02": {
+      "ship": 0,
+      "x": 1,
+      "y": 1,
+      "orient": "V"
+    },
+    "V03": {
+      "ship": 0,
+      "x": 1,
+      "y": 17,
+      "orient": "V"
+    },
+    "V04": {
+      "ship": 0,
+      "x": 5,
+      "y": 6,
+      "orient": "V"
+    },
+    "V05": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "V"
+    },
+    "V06": {
+      "ship": 0,
+      "x": 2,
+      "y": 3,
+      "orient": "H"
+    },
+    "V07": {
+      "ship": 0,
+      "x": 8,
+      "y": 1,
+      "orient": "H"
+    },
+    "V08": {
+      "ship": -1,
+      "x": null,
+      "y": null,
+      "orient": "H"
+    },
+    "V09": {
+      "ship": 0,
+      "x": 5,
+      "y": 3,
+      "orient": "V"
+    },
+    "V10": {
+      "ship": 0,
+      "x": 5,
+      "y": 12,
+      "orient": "H"
+    }
+  },
+  "best_feasible_value": 485,
+  "history": [
+    370,
+    425,
+    465,
+    485
+  ],
+  "avg_history": [],
+  "accept_probs": [],
+  "iterations": 3,
+  "duration_sec": 0.03316888599874801,
+  "extra": {
+    "stop_reason": "local_maximum"
+  },
+  "seed": 946,
+  "run": 2,
+  "instance": "instance_example.json"
+}
