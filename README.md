@@ -1,6 +1,6 @@
 # Tugas Besar 1 IF3070 Dasar Inteligensi Artifisial 2026/2027.
 
-Program mencari pengangkutan kendaraan yang optimal dengan mencari posisi dan orientasinya di deck kapal supaya total ShippingFee maksimal, tanpa overlap, tanpa keluar deck, dan tanpa melebihi kapasitas kapal. Algoritma yang dipakai: Hill-Climbing (Steepest Ascent, Stochastic, Sideways Move, Random Restart), Simulated Annealing, dan Genetic Algorithm. Multiship.
+Program mencari pengangkutan kendaraan yang optimal dengan mencari posisi dan orientasinya di deck kapal supaya total ShippingFee maksimal, tanpa overlap, tanpa keluar deck, dan tanpa melebihi kapasitas kapal. Algoritma yang dipakai: Hill-Climbing (Steepest Ascent, Stochastic, Sideways Move, Random Restart), Simulated Annealing, dan Genetic Algorithm. Program mendukung lebih dari satu kapal.
 
 ## Setup
 
@@ -22,6 +22,18 @@ python -m src.main --instance data/instance_example.json --algo steepest
 - parameter lain: `--runs`, `--seed`, `--out`, dan parameter algoritma seperti `--max-restart`, `--initial-temp`, `--population-size`, `--iterations`
 
 Hasil tiap run (JSON dan satu gambar berisi state awal, state akhir, serta plot) disimpan di `output/<instance>/<algoritma>/`.
+
+## Instance
+
+Enam instance ada di `data/`: `instance_example`, `instance_multiship`, `instance_small`, `instance_tight_space`, `instance_tight_weight`, dan `instance_multiship_hard`.
+
+Instance custom (misalnya 4 kapal dan 40 kendaraan) bisa dibuat dengan:
+
+```bash
+python -m src.experiments.generate_instances --ships 4 --vehicles 40 --seed 1 --out data/demo.json
+```
+
+Tanpa argumen, perintah itu membuat ulang empat instance uji di `data/`.
 
 ## Pembagian Tugas
 

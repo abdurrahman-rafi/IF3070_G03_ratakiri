@@ -1,1 +1,1 @@
-placeholder init
+Hasil run algoritma per instance: `output/<instance>/<algoritma>/`. Tiap run berisi file JSON dan satu gambar (state awal, state akhir, dan plot). `summary.txt` berisi ringkasan semua run pada instance tersebut.
