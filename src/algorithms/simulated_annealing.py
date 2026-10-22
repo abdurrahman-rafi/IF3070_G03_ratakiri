@@ -4,15 +4,14 @@ from .base import SearchRecorder
 from ..model.objective import evaluate
 
 
+# Simulated Annealing: cari solusi valid terbaik dengan penerimaan probabilistik.
+# Satu episode stagnasi tercatat saat best feasible tidak membaik selama
+# stagnation_limit iterasi beruntun. Episode baru dihitung setelah best feasible membaik.
+# Stagnasi tidak menghentikan pencarian dan bukan bukti local optimum.
+# Masukan: initial_state, rng, initial_temp, cooling_rate, min_temp, stagnation_limit.
+# Keluaran: dict hasil dari SearchRecorder.finish, termasuk jumlah penolakan dan stagnasi.
 def simulated_annealing(initial_state, rng, initial_temp=100.0,
                         cooling_rate=0.99, min_temp=0.01, stagnation_limit=50):
-    """Cari solusi valid terbaik sambil mencatat penolakan dan episode stagnasi.
-
-    Satu episode stagnasi tercatat saat best feasible tidak membaik selama
-    stagnation_limit iterasi beruntun. Episode baru hanya dapat dihitung
-    setelah best feasible membaik. Metrik ini tidak menghentikan pencarian
-    dan tidak membuktikan bahwa state berada di local optimum.
-    """
     if not (math.isfinite(initial_temp) and math.isfinite(min_temp)
             and 0 < min_temp < initial_temp):
         raise ValueError(

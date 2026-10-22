@@ -23,29 +23,6 @@ python -m src.main --instance data/instance_example.json --algo steepest
 
 Hasil tiap run (JSON, gambar state awal dan akhir, serta plot) disimpan di `output/<instance>/<algoritma>/`.
 
-### Eksperimen Simulated Annealing
-
-```bash
-python -m src.main --instance data/instance_example.json --algo sa --runs 3 --seed 945 --initial-temp 10 --stagnation-limit 50
-```
-
-`--stagnation-limit` adalah jumlah iterasi berturut-turut tanpa peningkatan nilai
-solusi valid terbaik (default 50). Hasil JSON menyimpan metrik pada `extra`:
-
-- `rejected_count`: jumlah neighbor yang ditolak.
-- `stuck_count`: jumlah episode stagnasi. Satu episode dihitung saat mencapai
-  batas N; iterasi berikutnya dalam episode yang sama tidak dihitung ulang.
-  Peningkatan nilai terbaik mereset penghitung iterasi dan memungkinkan episode baru.
-- `stagnation_iterations`: jumlah iterasi tanpa peningkatan sejak best feasible
-  terakhir membaik, atau sejak awal jika belum ada perbaikan.
-- `last_value`: nilai state terakhir yang dijelajahi, sedangkan `final_value`
-  adalah nilai solusi valid terbaik yang dikembalikan.
-
-Stagnasi adalah indikator operasional, bukan bukti local optimum, dan tidak
-menghentikan pencarian. Suhu awal default tetap 100; contoh di atas memakai 10
-secara eksplisit. Plot peluang penerimaan dibatasi pada rentang 0 sampai 1.
-Hasil lama dengan `stuck_count` tanpa `rejected_count` memakai definisi penolakan.
-
 ## Pembagian Tugas
 
 | Nama | NIM | Tugas |

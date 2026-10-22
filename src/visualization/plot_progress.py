@@ -5,7 +5,7 @@ from matplotlib.ticker import MaxNLocator
 # Menyimpan plot hasil eksperimen satu run.
 # Semua algoritma: value objective terhadap iterasi (iterasi 0 = initial state).
 # GA: max dan rata-rata populasi per generasi. Random restart: garis putus-putus di tiap restart.
-# Simulated Annealing: subplot kedua peluang penerimaan min(1, e^(dE/T)).
+# Simulated Annealing: subplot kedua e^(dE/T) terhadap iterasi.
 # Masukan: result (dict hasil algoritma), path file png.
 def plot_progress(result, path):
     has_sa = bool(result["accept_probs"])
@@ -40,15 +40,8 @@ def plot_progress(result, path):
         ax_sa.plot(range(1, len(result["accept_probs"]) + 1), result["accept_probs"], ".", markersize=2)
         ax_sa.set_ylim(-0.05, 1.05)
         ax_sa.set_xlabel("iterasi")
-        ax_sa.set_ylabel("peluang penerimaan")
-        extra = result["extra"]
-        if "rejected_count" in extra:
-            limit = result["params"]["stagnation_limit"]
-            title = (f"stagnasi (N={limit}): {extra['stuck_count']} kejadian; "
-                     f"neighbor ditolak: {extra['rejected_count']}")
-        else:
-            title = f"neighbor ditolak (format lama): {extra.get('stuck_count', '-')}"
-        ax_sa.set_title(title, fontsize=10)
+        ax_sa.set_ylabel(r"$e^{\Delta E / T}$")
+        ax_sa.set_title(f"stuck: {result['extra'].get('stuck_count', '-')} kali", fontsize=10)
 
     fig.tight_layout()
     fig.savefig(path, dpi=120)
