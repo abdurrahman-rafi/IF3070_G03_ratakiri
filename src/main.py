@@ -12,8 +12,7 @@ from .algorithms.simulated_annealing import simulated_annealing
 from .algorithms.genetic import genetic_algorithm
 from .experiments.runner import run_repeated
 from .experiments.ga_experiments import run_all as run_ga_experiments
-from .visualization.plot_state import plot_state
-from .visualization.plot_progress import plot_progress
+from .visualization.plot_run import plot_run
 
 ALGORITHMS = {
     "steepest": (hill_climbing.steepest_ascent, ("max_iterations",)),
@@ -29,13 +28,6 @@ PARAMETER_TYPES = {
     "stagnation_limit": int,
     "population_size": int, "iterations": int, "crossover_rate": float, "mutation_rate": float,
 }
-
-
-# Menyimpan gambar state (initial | final) dan plot progress di sebelah file json hasilnya.
-def save_visuals(result, vehicles, ships):
-    base = os.path.splitext(result["path"])[0]
-    plot_state(result, vehicles, ships, base + "_state.png")
-    plot_progress(result, base + "_plot.png")
 
 
 # Mencetak satu baris ringkasan per run: value awal -> akhir, iterasi, durasi, extra.
@@ -91,7 +83,7 @@ def main():
         return
 
     for result in results:
-        save_visuals(result, vehicles, ships)
+        plot_run(result, vehicles, ships, os.path.splitext(result["path"])[0] + ".png")
     print_summary(results)
     print(f"{len(results)} hasil disimpan di {args.out}/")
 

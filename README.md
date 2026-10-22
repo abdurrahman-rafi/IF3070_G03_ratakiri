@@ -21,7 +21,7 @@ python -m src.main --instance data/instance_example.json --algo steepest
 - tanpa `--algo` atau `--all`: menampilkan satu initial state random
 - parameter lain: `--runs`, `--seed`, `--out`, dan parameter algoritma seperti `--max-restart`, `--initial-temp`, `--population-size`, `--iterations`
 
-Hasil tiap run (JSON, gambar state awal dan akhir, serta plot) disimpan di `output/<instance>/<algoritma>/`.
+Hasil tiap run (JSON dan satu gambar berisi state awal, state akhir, serta plot) disimpan di `output/<instance>/<algoritma>/`.
 
 ## Pembagian Tugas
 
